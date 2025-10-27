@@ -2,7 +2,7 @@
 
 # image:
 #   repository: hant0505/dn-week8-app
-#   tag: 8a353793f8da201852508c0bc59759576a229f56
+#   tag: 7676696d3654aa86d9ad7ea3bf96cedee602f277
 #   pullPolicy: IfNotPresent
 
 # service:
@@ -25,7 +25,7 @@ image:
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 8a353793f8da201852508c0bc59759576a229f56
+  tag: 7676696d3654aa86d9ad7ea3bf96cedee602f277
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
