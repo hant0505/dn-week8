@@ -41,6 +41,19 @@ jobs:
         run: |
           docker push hant0505/dn-week8-app:${{ github.sha }}
 
-      # ✅ Gợi ý thêm: Ghi lại tag mới (cho Argo CD hoặc CI/CD pipeline khác)
       - name: Output new image tag
         run: echo "Image tag: hant0505/dn-week8-app:${{ github.sha }}"
+
+      # ✅ Update image tag trong file deployment.yaml
+      - name: Update image tag in deployment
+        run: |
+          sed -i "s|image: hant0505/dn-week8-app:.*|image: hant0505/dn-week8-app:${{ github.sha }}|" initial/k8s/deployment.yaml
+
+      # ✅ Commit thay đổi để ArgoCD tự sync
+      - name: Commit updated image tag
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions"
+          git add initial/k8s/deployment.yaml
+          git commit -m "Update image tag to ${{ github.sha }}"
+          git push
