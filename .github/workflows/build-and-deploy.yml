@@ -8,51 +8,37 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PAT }}  # Dùng PAT thay vì GITHUB_TOKEN
-          
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-          
+
       - name: Build Java project
         run: |
           cd gs-securing-web/initial
           mvn clean package -DskipTests
-          
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-          
+
       - name: Build Docker image
         run: |
           cd gs-securing-web/initial
           docker build -t hant0505/dn-week8-app:${{ github.sha }} .
-          
+
       - name: Push Docker image
         run: |
           docker push hant0505/dn-week8-app:${{ github.sha }}
-          
-      - name: Update Helm values for securing-web-week8
-        run: |
-          cd gs-securing-web/initial/securing-web-week8
-          sed -i "s|tag: .*|tag: ${{ github.sha }}|" values.yaml
-          
-      - name: Update Helm values for securing-web-week8
-        run: |
-          cd gs-securing-web/initial/securing-web-week8
-          sed -i "s|tag: .*|tag: ${{ github.sha }}|" values.yaml
-          
-      - name: Commit and push changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Update image tag to ${{ github.sha }}" || echo "No changes to commit"
-          git push
+
+      # ✅ Gợi ý thêm: Ghi lại tag mới (cho Argo CD hoặc CI/CD pipeline khác)
+      - name: Output new image tag
+        run: echo "Image tag: hant0505/dn-week8-app:${{ github.sha }}"

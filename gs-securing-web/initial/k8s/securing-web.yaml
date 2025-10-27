@@ -6,12 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/hant0505/dn-week8-app.git'
+    repoURL: 'https://github.com/hant0505/dn-week8.git'
     targetRevision: main
     path: initial/securing-web-week8
-    helm:
-      valueFiles:
-        - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
