@@ -1,6 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-#test1
 metadata:
   name: securing-web
   namespace: argocd
@@ -9,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/hant0505/dn-week8-app.git'
     targetRevision: main
-    path: gs-securing-web/initial/securing-web-week8
+    path: initial/securing-web-week8
     helm:
       valueFiles:
         - values.yaml
