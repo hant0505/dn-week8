@@ -7,6 +7,8 @@ on:
 
 jobs:
   build:
+    # ❗ Ngăn vòng lặp vô hạn: bỏ qua khi commit do bot tạo
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
