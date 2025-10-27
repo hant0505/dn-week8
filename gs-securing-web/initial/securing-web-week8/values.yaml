@@ -1,0 +1,113 @@
+replicaCount: 1
+
+image:
+  repository: hant0505/dn-week8-app
+<<<<<<< HEAD
+  tag: 2f59e921092b5c95974a98c0a93bd040d57db49a
+=======
+  tag: 67299e1cbbfeed4b81f2786272780be4a734068d
+>>>>>>> 09f23a45e6053b8bac56a986f7e04903c129b074
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+service:
+  port: 8085
+  type: LoadBalancer
+
+autoscaling:
+  enabled: false
+
+# Default values for securing-web-week8.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: hant0505/dn-week8-app
+  pullPolicy: IfNotPresent
+  tag: 67299e1cbbfeed4b81f2786272780be4a734068d
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+service:
+  type: LoadBalancer
+  port: 8085
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+# -- Expose the service via gateway-api HTTPRoute
+# Requires Gateway API resources and suitable controller installed within the cluster
+# (see: https://gateway-api.sigs.k8s.io/guides/)
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+    - name: gateway
+      sectionName: http
+      # namespace: default
+  hostnames:
+    - chart-example.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /headers
+      # filters:
+      #   - type: RequestHeaderModifier
+      #     requestHeaderModifier:
+      #       set:
+      #         - name: My-Overwrite-Header
+      #           value: this-is-the-only-value
+      #       remove:
+      #         - User-Agent
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+volumes: []
+volumeMounts: []
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
