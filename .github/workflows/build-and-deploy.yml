@@ -41,7 +41,8 @@ jobs:
           docker push hant0505/dn-week8-app:${{ github.sha }}
 
       - name: Output new image tag
-        run: echo "Image tag: hant0505/dn-week8-app:${{ github.sha }}"
+        run: |
+          echo "Image tag: hant0505/dn-week8-app:${{ github.sha }}"
 
       - name: Update image tag in deployment
         run: |
